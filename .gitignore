@@ -1,0 +1,13 @@
+# Godot / project specific
+.import/
+.godot/
+# Export builds
+export/
+# System / editors
+.DS_Store
+Thumbs.db
+# Logs / temp
+*.tmp
+*.log
+# Optional: large binary sources you don't want yet
+# assets/raw/

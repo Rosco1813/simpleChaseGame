@@ -1,0 +1,66 @@
+[gd_scene load_steps=8 format=3 uid="uid://main123"]
+
+[ext_resource type="PackedScene" uid="uid://player123" path="res://scenes/Player.tscn" id="1_x18xb"]
+[ext_resource type="PackedScene" uid="uid://enemy123" path="res://scenes/Enemy.tscn" id="2_vftm7"]
+[ext_resource type="Script" uid="uid://bnvk6xv0ja7lo" path="res://scripts/spawner.gd" id="3_jf4m4"]
+
+[sub_resource type="RectangleShape2D" id="1"]
+size = Vector2(800, 20)
+
+[sub_resource type="RectangleShape2D" id="2"]
+size = Vector2(800, 20)
+
+[sub_resource type="RectangleShape2D" id="3"]
+size = Vector2(20, 600)
+
+[sub_resource type="RectangleShape2D" id="4"]
+size = Vector2(20, 600)
+
+[node name="Main" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_x18xb")]
+
+[node name="EnemySpawner" type="Node" parent="."]
+script = ExtResource("3_jf4m4")
+enemy_scene = ExtResource("2_vftm7")
+spawn_interval = 1.5
+max_enemies = 8
+spawn_radius = 400.0
+player_path = NodePath("../Player")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+limit_left = -2000
+limit_top = -2000
+limit_right = 2000
+limit_bottom = 2000
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="Top" type="StaticBody2D" parent="Walls"]
+position = Vector2(0, -310)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Top"]
+shape = SubResource("1")
+
+[node name="Bottom" type="StaticBody2D" parent="Walls"]
+position = Vector2(0, 310)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Bottom"]
+shape = SubResource("2")
+
+[node name="Left" type="StaticBody2D" parent="Walls"]
+position = Vector2(-410, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Left"]
+shape = SubResource("3")
+
+[node name="Right" type="StaticBody2D" parent="Walls"]
+position = Vector2(410, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Right"]
+shape = SubResource("4")
+
+[node name="Border" type="Line2D" parent="."]
+points = PackedVector2Array(-400, -300, 400, -300, 400, 300, -400, 300, -400, -300)
+width = 2.0
+default_color = Color(1, 1, 1, 0.5)
