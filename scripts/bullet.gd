@@ -30,5 +30,9 @@ func _physics_process(delta: float) -> void:
 
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("enemy"):
+		if get_tree().has_group("game"):
+			for n in get_tree().get_nodes_in_group("game"):
+				if n.has_method("on_enemy_killed"):
+					n.on_enemy_killed(body)
 		body.queue_free()
 		queue_free()

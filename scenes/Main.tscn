@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://main123"]
+[gd_scene load_steps=10 format=3 uid="uid://main123"]
 
 [ext_resource type="PackedScene" uid="uid://player123" path="res://scenes/Player.tscn" id="1_x18xb"]
 [ext_resource type="PackedScene" uid="uid://enemy123" path="res://scenes/Enemy.tscn" id="2_vftm7"]
 [ext_resource type="Script" uid="uid://bnvk6xv0ja7lo" path="res://scripts/spawner.gd" id="3_jf4m4"]
+[ext_resource type="PackedScene" uid="uid://hud123" path="res://scenes/HUD.tscn" id="4_hud"]
+[ext_resource type="Script" uid="uid://c80ygdkhdlluy" path="res://scripts/game_manager.gd" id="5_mgr"]
 
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(800, 20)
@@ -17,6 +19,8 @@ size = Vector2(20, 600)
 size = Vector2(20, 600)
 
 [node name="Main" type="Node2D"]
+script = ExtResource("5_mgr")
+hud_path = NodePath("HUD")
 
 [node name="Player" parent="." instance=ExtResource("1_x18xb")]
 
@@ -64,3 +68,5 @@ shape = SubResource("4")
 points = PackedVector2Array(-400, -300, 400, -300, 400, 300, -400, 300, -400, -300)
 width = 2.0
 default_color = Color(1, 1, 1, 0.5)
+
+[node name="HUD" parent="." instance=ExtResource("4_hud")]

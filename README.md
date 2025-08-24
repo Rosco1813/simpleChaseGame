@@ -3,26 +3,38 @@
 Minimal, annotated top‑down chase prototype – designed to be easy to extend and debug.
 
 ## Features
+- Start menu (click Start to begin, optional Quit on desktop).
 - Player movement using default `ui_*` actions (Arrow Keys / WASD).
+- Shooting with left mouse button (bullets destroy enemies on hit).
+- Player health with floating health bar; touching enemies deals damage.
+- Death screen overlay on player death (You Died + stats + Restart / Start Menu buttons).
 - Enemies that seek the player but stop at a safe distance (`stop_distance`).
-- Spawner that periodically creates enemies around the player (uniform circle distribution) with clamped in‑bounds positioning (`spawn_margin`).
+- Wave system with color shift each wave and short breaks (HUD shows status).
+- Spawner (wave‑driven) with in‑bounds positioning using `spawn_margin`.
 - World bounds (`GameConfig.world_rect`) + physical wall colliders + visible border line.
+- HUD: kills, elapsed time, current wave, wave/break status.
 - Simple colored `Polygon2D` placeholders (no external art needed).
 - Clean separation of scenes & scripts for quick iteration.
 
 ## Project Structure
 ```
 scenes/
-  Main.tscn        # Root scene (walls, border, spawner, player, camera)
-  Player.tscn      # Player character scene (square + collision)
-  Enemy.tscn       # Enemy character scene (square + collision + stop distance)
+  StartMenu.tscn   # Startup menu (buttons + instructions)
+  Main.tscn        # Gameplay scene (walls, border, spawner, player, HUD)
+  Player.tscn      # Player character (movement + shooting)
+  Enemy.tscn       # Enemy character (chase + stop distance)
+  Bullet.tscn      # Bullet projectile
+  HUD.tscn         # HUD (kills, time, wave, status)
 scripts/
-  player.gd        # Movement + clamping to world rect
-  enemy.gd         # Chase logic + stop distance + clamping
-  spawner.gd       # Timed spawning (radius, margin, max count)
+  start_menu.gd    # Menu button handlers (start / optional quit)
+  player.gd        # Movement + shooting + clamp
+  enemy.gd         # Chase logic + stop distance + clamp
+  spawner.gd       # Wave spawning & enemy color assignment
+  game_manager.gd  # Wave progression, kill count, HUD updates
+  bullet.gd        # Bullet movement + collision -> enemy removal
   game_config.gd   # Autoload singleton storing world_rect
 assets/            # (Put art/audio here later)
-project.godot      # Project config + autoload
+project.godot      # Project config + autoload + input map
 ```
 
 ## Input Map
@@ -39,14 +51,18 @@ Godot already has ui_left/right/up/down. If not, add them in Project Settings > 
 
 ## Running
 1. Open folder in Godot 4.4.1.
-2. Ensure autoload: Project Settings > Autoload: `scripts/game_config.gd` as `GameConfig` (already configured in `project.godot`, just verify).
-3. Press Play (F5). Move with Arrow Keys / WASD.
-4. Enemies spawn around player, stay within border, and halt at `stop_distance`.
+2. Autoload already set (`GameConfig`). Verify if needed.
+3. Press Play (F5) to view the Start Menu.
+4. Click Start to load gameplay (`Main.tscn`).
+5. Move with WASD / Arrows. Aim with mouse; left click to shoot.
+6. Survive waves. Between waves a short break shows in HUD. Wave color tint shifts each wave.
+7. Kills, time, wave number, and status display on HUD.
 
 ## Key Tunable Exports (select nodes to edit in Inspector)
-Player (`Player.tscn`): `speed`
+Player (`Player.tscn`): `speed`, `fire_cooldown`, `bullet_spawn_radius`, `max_health`, `damage_cooldown`
 Enemy (`Enemy.tscn`): `speed`, `stop_distance`
-EnemySpawner (in `Main.tscn`): `spawn_interval`, `max_enemies`, `spawn_radius`, `spawn_margin`, `enemy_scene`, `player_path`
+EnemySpawner (in `Main.tscn`): `spawn_interval` (only if not wave mode), `max_enemies`, `spawn_radius`, `spawn_margin`, `enemy_scene`, `player_path`, `wave_mode`
+GameManager (in `Main.tscn`): `wave_duration`, `break_duration`, `base_enemies_per_wave` (plus incremental logic inside script)
 GameConfig (autoload): `world_rect` (playable area size & position)
 
 ## World Bounds & Walls

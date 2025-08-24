@@ -1,0 +1,70 @@
+[gd_scene load_steps=2 format=3 uid="uid://hud123"]
+
+[ext_resource type="Script" path="res://scripts/death_overlay.gd" id="1_do"]
+
+[node name="HUD" type="CanvasLayer"]
+
+[node name="KillLabel" type="Label" parent="."]
+offset_left = 8.0
+offset_top = 8.0
+text = "Kills: 0"
+
+[node name="TimeLabel" type="Label" parent="."]
+offset_left = 8.0
+offset_top = 28.0
+text = "Time: 0.0"
+
+[node name="WaveLabel" type="Label" parent="."]
+offset_left = 8.0
+offset_top = 48.0
+text = "Wave: 1"
+
+[node name="WaveStatus" type="Label" parent="."]
+offset_left = 8.0
+offset_top = 68.0
+text = "Fighting"
+
+[node name="DeathOverlay" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+script = ExtResource("1_do")
+
+[node name="BG" type="ColorRect" parent="DeathOverlay"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.55)
+
+[node name="CenterContainer" type="CenterContainer" parent="DeathOverlay"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DeathOverlay/CenterContainer"]
+alignment = 1
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="DeathOverlay/CenterContainer/VBoxContainer"]
+text = "You Died"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 48
+
+[node name="Stats" type="Label" parent="DeathOverlay/CenterContainer/VBoxContainer"]
+text = "Kills: 0\nWave Reached: 1\nTime: 0.0s"
+horizontal_alignment = 1
+
+[node name="RestartButton" type="Button" parent="DeathOverlay/CenterContainer/VBoxContainer"]
+text = "Restart"
+
+[node name="MenuButton" type="Button" parent="DeathOverlay/CenterContainer/VBoxContainer"]
+text = "Start Menu"
