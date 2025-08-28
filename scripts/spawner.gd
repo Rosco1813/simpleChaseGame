@@ -68,7 +68,11 @@ func _spawn_enemy_if_needed():
 				break
 		if has_target_path:
 			enemy.set("target_path", _player.get_path())
-	add_child(enemy)
+	# Add enemy directly to YSort parent so y-sorting includes it
+	if get_parent():
+		get_parent().add_child(enemy)
+	else:
+		add_child(enemy) # fallback
 
 func start_wave(wave_number: int, enemy_count: int, color: Color) -> int:
 	if enemy_scene == null:
@@ -95,7 +99,10 @@ func start_wave(wave_number: int, enemy_count: int, color: Color) -> int:
 				enemy.set("target_path", _player.get_path())
 		# Color application
 		_apply_wave_color(enemy, color)
-		add_child(enemy)
+		if get_parent():
+			get_parent().add_child(enemy)
+		else:
+			add_child(enemy)
 		_wave_spawned += 1
 	return _wave_spawned
 

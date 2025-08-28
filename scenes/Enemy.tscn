@@ -13,3 +13,9 @@ polygon = PackedVector2Array(-10, -10, 10, -10, 10, 10, -10, 10)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("1")
+
+[node name="Shadow" type="Polygon2D" parent="."]
+z_index = -1
+position = Vector2(0, 14)
+color = Color(0, 0, 0, 0.26)
+polygon = PackedVector2Array(-12, -2, -8, 1, 0, 2, 8, 1, 12, -2, 8, -3, 0, -4, -8, -3)

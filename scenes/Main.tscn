@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://main123"]
+[gd_scene load_steps=11 format=3 uid="uid://main123"]
 
 [ext_resource type="PackedScene" uid="uid://player123" path="res://scenes/Player.tscn" id="1_x18xb"]
 [ext_resource type="PackedScene" uid="uid://enemy123" path="res://scenes/Enemy.tscn" id="2_vftm7"]
 [ext_resource type="Script" uid="uid://bnvk6xv0ja7lo" path="res://scripts/spawner.gd" id="3_jf4m4"]
 [ext_resource type="PackedScene" uid="uid://hud123" path="res://scenes/HUD.tscn" id="4_hud"]
 [ext_resource type="Script" uid="uid://c80ygdkhdlluy" path="res://scripts/game_manager.gd" id="5_mgr"]
+[ext_resource type="Script" uid="uid://cyarasqdsuyy2" path="res://scripts/wall_occluder.gd" id="6_wallOcc"]
 
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(800, 20)
@@ -22,15 +23,58 @@ size = Vector2(20, 600)
 script = ExtResource("5_mgr")
 hud_path = NodePath("HUD")
 
-[node name="Player" parent="." instance=ExtResource("1_x18xb")]
+[node name="WorldYSort" type="Node2D" parent="."]
 
-[node name="EnemySpawner" type="Node" parent="."]
+[node name="Player" parent="WorldYSort" instance=ExtResource("1_x18xb")]
+
+[node name="EnemySpawner" type="Node" parent="WorldYSort" groups=["spawner"]]
 script = ExtResource("3_jf4m4")
 enemy_scene = ExtResource("2_vftm7")
 spawn_interval = 1.5
 max_enemies = 8
 spawn_radius = 400.0
 player_path = NodePath("../Player")
+
+[node name="WallVisuals" type="Node2D" parent="WorldYSort"]
+
+[node name="WallTopVis" type="Node2D" parent="WorldYSort/WallVisuals"]
+position = Vector2(0, -300)
+script = ExtResource("6_wallOcc")
+base_line = -300.0
+
+[node name="Poly" type="Polygon2D" parent="WorldYSort/WallVisuals/WallTopVis"]
+color = Color(0.15, 0.18, 0.22, 1)
+polygon = PackedVector2Array(-400, 0, 400, 0, 400, -40, -400, -40)
+
+[node name="WallBottomVis" type="Node2D" parent="WorldYSort/WallVisuals"]
+position = Vector2(0, 300)
+script = ExtResource("6_wallOcc")
+orientation = "BOTTOM"
+base_line = 300.0
+
+[node name="Poly" type="Polygon2D" parent="WorldYSort/WallVisuals/WallBottomVis"]
+color = Color(0.15, 0.18, 0.22, 1)
+polygon = PackedVector2Array(-400, 0, 400, 0, 400, 40, -400, 40)
+
+[node name="WallLeftVis" type="Node2D" parent="WorldYSort/WallVisuals"]
+position = Vector2(-400, 0)
+script = ExtResource("6_wallOcc")
+orientation = "LEFT"
+base_line = -400.0
+
+[node name="Poly" type="Polygon2D" parent="WorldYSort/WallVisuals/WallLeftVis"]
+color = Color(0.17, 0.2, 0.24, 1)
+polygon = PackedVector2Array(0, -300, 0, 300, -40, 300, -40, -300)
+
+[node name="WallRightVis" type="Node2D" parent="WorldYSort/WallVisuals"]
+position = Vector2(400, 0)
+script = ExtResource("6_wallOcc")
+orientation = "RIGHT"
+base_line = 400.0
+
+[node name="Poly" type="Polygon2D" parent="WorldYSort/WallVisuals/WallRightVis"]
+color = Color(0.17, 0.2, 0.24, 1)
+polygon = PackedVector2Array(0, -300, 40, -300, 40, 300, 0, 300)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 limit_left = -2000

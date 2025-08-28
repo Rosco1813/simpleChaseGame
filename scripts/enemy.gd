@@ -13,13 +13,20 @@ func _ready() -> void:
 		_world_rect = GameConfig.world_rect
 
 func _physics_process(delta: float) -> void:
+	if typeof(DebugSettings) != TYPE_NIL and DebugSettings.enabled and DebugSettings.freeze_enemies:
+		velocity = Vector2.ZERO
+		move_and_slide()
+		return
 	if not is_instance_valid(target):
 		return
 	var dir = (target.global_position - global_position)
 	var dist = dir.length()
 	if dist > stop_distance:
 		dir = dir.normalized()
-		velocity = dir * speed
+		var spd_mult := 1.0
+		if typeof(DebugSettings) != TYPE_NIL and DebugSettings.enabled:
+			spd_mult = DebugSettings.enemy_speed_mult
+		velocity = dir * speed * spd_mult
 	else:
 		velocity = Vector2.ZERO
 	move_and_slide()

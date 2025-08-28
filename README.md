@@ -8,6 +8,7 @@ Minimal, annotated top‑down chase prototype – designed to be easy to extend 
 - Shooting with left mouse button (bullets destroy enemies on hit).
 - Player health with floating health bar; touching enemies deals damage.
 - Death screen overlay on player death (You Died + stats + Restart / Start Menu buttons).
+- Pause menu (press mapped Pause key) with Resume / Settings placeholder / Start Menu.
 - Enemies that seek the player but stop at a safe distance (`stop_distance`).
 - Wave system with color shift each wave and short breaks (HUD shows status).
 - Spawner (wave‑driven) with in‑bounds positioning using `spawn_margin`.

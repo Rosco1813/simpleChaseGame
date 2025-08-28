@@ -16,11 +16,11 @@ func _ready() -> void:
 		menu_button.pressed.connect(_on_menu_pressed)
 	visible = false
 
-func show_overlay(kills: int, wave: int, time_survived: float) -> void:
+func show_overlay(kills: int, wave: int, time_survived: float, bullets: int, score: int) -> void:
 	if title_label:
 		title_label.text = "You Died"
 	if stats_label:
-		stats_label.text = "Kills: %d\nWave Reached: %d\nTime: %.1fs" % [kills, wave, time_survived]
+		stats_label.text = "Kills: %d\nWave Reached: %d\nTime: %.1fs\nBullets Fired: %d\nScore: %d" % [kills, wave, time_survived, bullets, score]
 	visible = true
 
 func _on_restart_pressed():
