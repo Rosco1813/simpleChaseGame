@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://main123"]
+[gd_scene load_steps=11 format=3 uid="uid://main123"]
 
 [ext_resource type="PackedScene" uid="uid://player123" path="res://scenes/Player.tscn" id="1_x18xb"]
 [ext_resource type="PackedScene" uid="uid://enemy123" path="res://scenes/Enemy.tscn" id="2_vftm7"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://c80ygdkhdlluy" path="res://scripts/game_manager.gd" id="5_mgr"]
 [ext_resource type="Script" uid="uid://7hopn11eomfd" path="res://scripts/door_to_room2.gd" id="7_door"]
 [ext_resource type="Script" uid="uid://po0r12dic778" path="res://scripts/wall_tilemap.gd" id="9_wallmap"]
+[ext_resource type="Script" uid="uid://c48p8fx8mii71" path="res://scripts/camera_follow.gd" id="10_cam"]
 
 [sub_resource type="RectangleShape2D" id="5"]
 size = Vector2(20, 160)
@@ -35,10 +36,8 @@ format = 2
 script = ExtResource("9_wallmap")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-limit_left = -2000
-limit_top = -2000
-limit_right = 2000
-limit_bottom = 2000
+script = ExtResource("10_cam")
+smooth_speed = 10.0
 
 [node name="HUD" parent="." instance=ExtResource("4_hud")]
 

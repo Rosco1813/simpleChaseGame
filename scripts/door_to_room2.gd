@@ -33,17 +33,15 @@ func open_door():
 	if blocker:
 		for c in blocker.get_children():
 			if c is CollisionShape2D:
-				c.disabled = true
+				c.set_deferred("disabled", true)
 		blocker.visible = false
-		# Fully remove blocker to guarantee no lingering collision
-		blocker.queue_free()
+		# Fully remove blocker to guarantee no lingering collision (deferred)
+		blocker.call_deferred("queue_free")
 	# Ensure trigger no longer obstructs (disable its shapes & stop monitoring)
 	if trigger:
-		for c in trigger.get_children():
-			if c is CollisionShape2D:
-				c.disabled = true
-		trigger.monitoring = true # still needs to fire once when player enters
-		trigger.monitorable = false # prevent physics bodies from treating it as obstacle
+		# Leave trigger shapes enabled so it can detect player crossing.
+		trigger.set_deferred("monitoring", true)
+		trigger.set_deferred("monitorable", true)
 	# Disable door fill segments if present (split wall pattern)
 	# (Legacy door fill segments removed; collision gap handled by TileMap script now.)
 	# (No door visual to fade in.)

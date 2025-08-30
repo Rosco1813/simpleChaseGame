@@ -215,7 +215,7 @@ func _create_virtual_cursor():
 	dot.position = Vector2(-3,-3)
 	_virtual_cursor.add_child(dot)
 
-func _update_aim(delta: float):
+func _update_aim(_delta: float):
 	# Detect mouse movement (keep indentation strictly tabs to avoid mixed indentation parse errors)
 	var mp = get_viewport().get_mouse_position()
 	if mp.distance_to(_mouse_last_pos) > 2.0:
@@ -239,9 +239,9 @@ func _update_aim(delta: float):
 			norm_tilt = clamp(norm_tilt, 0.0, 1.0)
 			var dir = stick.normalized()
 			_last_stick_dir = dir
-			var speed = virtual_cursor_speed * (0.15 + 0.85 * norm_tilt) * (1.0 + virtual_cursor_accel_scale * norm_tilt)
+			var cursor_speed = virtual_cursor_speed * (0.15 + 0.85 * norm_tilt) * (1.0 + virtual_cursor_accel_scale * norm_tilt)
 			# Raw move (store pre-assist position)
-			var raw_pos = _virtual_cursor.global_position + dir * speed * get_physics_process_delta_time()
+			var raw_pos = _virtual_cursor.global_position + dir * cursor_speed * get_physics_process_delta_time()
 			_virtual_cursor.global_position = raw_pos
 		# Clamp to visible camera view so it never leaves screen
 		var cam = get_viewport().get_camera_2d()

@@ -110,6 +110,7 @@ func _start_next_wave():
 	_in_break = false
 	var enemy_count = base_wave_enemy_count + (wave - 1) * wave_enemy_growth
 	enemies_remaining_in_wave = enemy_count
+	print_debug("[GameManager] Starting wave ", wave, " enemy_count=", enemy_count)
 	# Choose color based on wave (cycle hues)
 	var hue = fmod((wave * 0.13), 1.0)
 	var wave_color = Color.from_hsv(hue, 0.75, 0.95)
@@ -132,6 +133,7 @@ func _start_next_wave():
 		if has_max and enemy_count > spawner.max_enemies:
 			spawner.max_enemies = enemy_count
 		var spawned = spawner.start_wave(wave, enemy_count, wave_color)
+		print_debug("[GameManager] Requested spawn wave ", wave, " -> spawned=", spawned)
 		enemies_remaining_in_wave = spawned
 		if spawned == 0:
 			# If nothing spawned, immediately schedule another attempt after short break
@@ -203,6 +205,7 @@ func _on_player_entered_room2():
 		# Defer wave start until player reaches center area
 		waiting_for_room2_center = true
 		_in_break = true # treat as break until ready
+		print_debug("[GameManager] Player entered Room2; waiting for center.")
 
 func get_active_room_rect() -> Rect2:
 	return ROOM2_RECT if current_room == 2 else ROOM1_RECT
@@ -239,6 +242,7 @@ func _check_room2_center_progress():
 		_in_break = false
 		_between_waves_timer = 0.0
 		_start_next_wave()
+		print_debug("[GameManager] Player reached Room2 center; starting next wave.")
 
 func on_bullet_fired():
 	bullets_fired += 1
