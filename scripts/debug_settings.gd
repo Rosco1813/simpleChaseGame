@@ -8,32 +8,36 @@ var player_speed_mult: float = 1.0
 var enemy_speed_mult: float = 1.0
 var time_scale: float = 1.0
 var show_collision_shapes: bool = false
+var log_enemy_launch: bool = false
+var log_enemy_spawn: bool = false
 
 signal changed(name, value)
 
 # Allowed flag names for validation
 const _ALLOWED := {
-    "invincible": true,
-    "freeze_enemies": true,
-    "player_speed_mult": true,
-    "enemy_speed_mult": true,
-    "time_scale": true,
-    "show_collision_shapes": true
+	"invincible": true,
+	"freeze_enemies": true,
+	"player_speed_mult": true,
+	"enemy_speed_mult": true,
+	"time_scale": true,
+	"show_collision_shapes": true
+	,"log_enemy_launch": true
+	,"log_enemy_spawn": true
 }
 
 func set_flag(name: String, value) -> void:
-    if not enabled:
-        return
-    if not _ALLOWED.has(name):
-        return
-    self.set(name, value)
-    emit_signal("changed", name, value)
+	if not enabled:
+		return
+	if not _ALLOWED.has(name):
+		return
+	self.set(name, value)
+	emit_signal("changed", name, value)
 
 func reset() -> void:
-    invincible = false
-    freeze_enemies = false
-    player_speed_mult = 1.0
-    enemy_speed_mult = 1.0
-    time_scale = 1.0
-    show_collision_shapes = false
-    emit_signal("changed", "reset", null)
+	invincible = false
+	freeze_enemies = false
+	player_speed_mult = 1.0
+	enemy_speed_mult = 1.0
+	time_scale = 1.0
+	show_collision_shapes = false
+	emit_signal("changed", "reset", null)

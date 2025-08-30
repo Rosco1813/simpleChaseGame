@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://room2"]
+
+[ext_resource type="Script" path="res://scripts/wall_tilemap.gd" id="2_wmap"]
+
+[sub_resource type="RectangleShape2D" id="1"]
+size = Vector2(800, 20)
+
+[sub_resource type="RectangleShape2D" id="2"]
+size = Vector2(20, 600)
+
+[sub_resource type="RectangleShape2D" id="3"]
+size = Vector2(20, 220)
+
+[sub_resource type="RectangleShape2D" id="4"]
+size = Vector2(20, 220)
+
+[node name="Room2" type="Node2D"]
+position = Vector2(820, 0)
+[node name="WallMap" type="TileMap" parent="."]
+position = Vector2(0,0)
+tile_set = null
+format = 2
+script = ExtResource("2_wmap")
+room_origin = Vector2(-400, -300)
+room_size = Vector2(800, 600)
+doorway_center = Vector2(-400, 0)
+doorway_half_height = 110
+
+
+
+
